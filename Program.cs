@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 
+
 namespace Bussen
 {
 
@@ -17,20 +18,28 @@ namespace Bussen
             buss.Run();
 
             Console.ReadKey();
-
+        
         }
+        
 
-        public string GetSolutionDir()
+        
+        
+        public string GetLibPath()
         {
-            string buildPath = Directory.GetCurrentDirectory();
-
-
+            string libPath = "";
+            
+            if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX)){
+                libPath = Directory.GetCurrentDirectory() + @"/Library/SvenskaNamn.txt";
+            }
+            else if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)){
             for (int i = 0; i < 3; i++)
             {
-                buildPath = Directory.GetParent(buildPath).ToString();
+                libPath = Directory.GetParent(libPath).ToString() + @"\Library\SvenskaNamn.txt";
             }
+            }
+            
 
-            return buildPath;
+            return libPath;
         }
 
     }

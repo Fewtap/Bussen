@@ -20,7 +20,9 @@ namespace Bussen
 
         public Passenger()
         {
-            string[] names = File.ReadAllLines(new Program().GetSolutionDir() + @"\Library\SvenskaNamn.txt");
+            string[] names = File.ReadAllLines(new Program().GetLibPath());
+
+            
             
 
             age_ = new Random().Next(18, 80);
