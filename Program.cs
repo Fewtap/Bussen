@@ -36,6 +36,9 @@ namespace Bussen
                 libPath = Directory.GetCurrentDirectory() + @"/Library/SvenskaNamn.txt";
                 
             }
+            else if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux)){
+                libPath = Directory.GetCurrentDirectory() + @"/Library/SvenskaNamn.txt";
+            }
             else if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)){
 
 
