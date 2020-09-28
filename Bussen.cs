@@ -1,4 +1,5 @@
-﻿/*Hjälpkod för att komma igång
+﻿
+/*Hjälpkod för att komma igång
  * Notera att båda klasserna är i samma fil för att det ska underlätta.
  * Om programmet blir större bör man ha klasserna i separata filer såsom jag går genom i filmen
  * Då kan det vara läge att ställa in startvärden som jag gjort.
@@ -32,38 +33,66 @@ namespace Bussen
                 Console.WriteLine("  2. Show the total age of all the passengers in the bus.");
                 Console.WriteLine("  3. Show passenger information.");
                 Console.WriteLine("  4. Calculate the average age of all the passengers in the bus.");
-                Console.WriteLine("  5. Exit the program.");
+                Console.WriteLine("  5. Find the oldest person.");
+                Console.WriteLine("  6. Exit the program.");
                 Console.WriteLine();
                 Console.WriteLine("------------------------------");
 
-                switch (int.Parse(Console.ReadLine()))
+                bool tryagain = true;
+                while (tryagain)
                 {
-                    case 1:
-                        Console.WriteLine();
-                        add_passenger();
-                        Console.WriteLine();
-                        break;
-                    case 2:
-                        Console.WriteLine();
-                        Console.WriteLine("Den totala åldern av alla passagerare är: " + calc_total_age());
-                        Console.WriteLine();
-                        break;
-                    case 3:
-                        Console.WriteLine();
-                        print_buss();
-                        Console.WriteLine();
-                        break;
-                    case 4:
-                        Console.WriteLine();
-                        Console.WriteLine("Den genomsnittliga åldern i bussen är: " + calc_average_age() + " år.");
-                        break;
-                    case 5:
-                        programIsActive = false;
-                        break;
-                    
+                    try
+                    {
 
 
+
+                        switch (int.Parse(Console.ReadLine()))
+                        {
+                            case 1:
+                                Console.Clear();
+                                add_passenger();
+                                break;
+                            case 2:
+                                Console.Clear();
+                                Console.WriteLine("Den totala åldern av alla passagerare är: " + calc_total_age());
+                                                             
+                                break;
+                            case 3:
+                                Console.Clear();
+                                print_buss();
+                                Console.WriteLine();
+                                
+                                break;
+                            case 4:
+                                Console.Clear();
+                                Console.WriteLine("Den genomsnittliga åldern i bussen är: " + calc_average_age() + " år.");
+                                Console.Clear();
+                                break;
+
+                            case 5:
+                                Console.Clear();
+                                max_age();                                
+                                break;
+                            case 6:
+                                programIsActive = false;
+                                break;
+
+
+
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        tryagain = true;
+                        Console.Clear();
+                        Console.WriteLine("Det du skrev in är inte en giltlig inmatning, prova igen.");
+                    }
+
+                    tryagain = false;
                 }
+                
+                
                 
                 
             }
@@ -124,9 +153,14 @@ namespace Bussen
                     default:
                         break;
                 }
-                Console.WriteLine();
+
+                Console.Clear();
                 Console.WriteLine(Passengers[Passenger.amountOfP - 1].name_ + " som är " + Passengers[Passenger.amountOfP - 1].age_ + " år, klev på bussen.");
                 
+            }
+            else
+            {
+                Console.WriteLine("Bussen är tyvärr full nu, be en passagerare att gå av innan en ny stiger på.");
             }
             
 
@@ -143,6 +177,8 @@ namespace Bussen
 
         public void print_buss()
         {
+            Console.Clear();
+
             for (int i = 0; i < Passengers.Length; i++)
             {
                 if(Passengers[i] != null)
@@ -191,8 +227,49 @@ namespace Bussen
             
         }
 
+        public void max_age()
+        {
+            int oldestPassengerI = 0;
+
+            for (int i = 0; i < Passengers.Length; i++)
+            {
+                if(Passengers[i] != null)
+                {
+                    if (Passengers[oldestPassengerI].age_ < Passengers[i].age_)
+                    {
+                        oldestPassengerI = i;
+                    }
+                }
+                
+                
+            }
+
+            Passenger oldestP = Passengers[oldestPassengerI];
+            Console.Clear();
+            Console.WriteLine("The oldest passenger is " + oldestP.name_ + " who is " + oldestP.age_ + " years old.");
+        }
+
+        public void sort_bus()
+        {
+
+            Passenger temp;
+            for (int j = 0; j <= Passengers.Length - 2; j++)
+            {
+                for (int i = 0; i <= Passengers.Length - 2; i++)
+                {
+                    if (Passengers[i].age_ > Passengers[i + 1].age_)
+                    {
+                        temp = Passengers[i + 1];
+                        Passengers[i + 1] = Passengers[i];
+                        Passengers[i] = temp;
+                    }
+                }
+            }
 
 
 
+
+
+        }
     }
 }
