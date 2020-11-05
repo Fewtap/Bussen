@@ -200,7 +200,8 @@ namespace Bussen
                 while (loop == true);
 
 
-
+                Console.Clear();
+                System.Console.WriteLine(Passengers[Passenger.amountOfP - 1].name_ + " som är " + Passengers[Passenger.amountOfP - 1].age_ + " år, klev på bussen");
 
 
             }

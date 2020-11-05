@@ -21,7 +21,7 @@ namespace Bussen
 
         public Passenger()
         {
-            string[] nameAndSexList = File.ReadAllLines(new Program().GetLibPath()); //Samlar in alla namn och kön som finns i en CSV fil i "Library"
+            string[] nameAndSexList = File.ReadAllLines(GetLibPath()); //Samlar in alla namn och kön som finns i en CSV fil i "Library"
 
             int nameIndex = new Random().Next(0, (nameAndSexList.Length - 1)); // Skapar en slumpmässig index för att bestämma namn och kön
 
@@ -33,6 +33,33 @@ namespace Bussen
             sex_ = nameAndSexList[nameIndex].Split(",")[1];//Här väljer vi könet som är framför kommatecknet och därför väljer vi index 1 i vektorn som metoden returnerar.
 
             amountOfP++;
+
+        }
+
+        public string GetLibPath()
+        {
+            string libPath = "";
+
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
+            {
+
+                libPath = Directory.GetCurrentDirectory() + @"/Library/SvenskaNamnOchKön.csv";
+
+            }
+            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+            {
+                libPath = Directory.GetCurrentDirectory() + @"/Library/SvenskaNamnOchKön.csv";
+            }
+            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+            {
+
+                libPath = System.Environment.CurrentDirectory + @"\Library\SvenskaNamnOchKön.csv";
+                
+
+            }
+
+            return libPath;
+
 
         }
     }

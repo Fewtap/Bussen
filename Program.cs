@@ -13,46 +13,16 @@ namespace Bussen
     {
         static void Main(string[] args)
         {
-
-
             Buss buss = new Buss();
 
             buss.Run();
 
-
-
-
         }
 
 
 
 
-        public string GetLibPath()
-        {
-            string libPath = "";
-
-            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
-            {
-
-                libPath = Directory.GetCurrentDirectory() + @"/Library/SvenskaNamnOchKön.csv";
-
-            }
-            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
-            {
-                libPath = Directory.GetCurrentDirectory() + @"/Library/SvenskaNamnOchKön.csv";
-            }
-            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
-            {
-
-
-                libPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\")) + @"Library\SvenskaNamnOchKön.csv";
-
-            }
-
-            return libPath;
-
-
-        }
+        
 
     }
 }
