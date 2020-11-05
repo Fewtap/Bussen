@@ -18,7 +18,7 @@ namespace Bussen
     {
         public Passenger[] Passengers = new Passenger[25];
         bool programIsActive = true;
-        
+
 
         public void Run()
         {
@@ -39,141 +39,187 @@ namespace Bussen
                 Console.WriteLine("------------------------------");
 
                 bool tryagain = true;
-                while (tryagain)
+
+                int selection = 0;
+                try
                 {
-                    try
-                    {
-
-
-
-                        switch (int.Parse(Console.ReadLine()))
-                        {
-                            case 1:
-                                Console.Clear();
-                                add_passenger();
-                                break;
-                            case 2:
-                                Console.Clear();
-                                Console.WriteLine("Den totala åldern av alla passagerare är: " + calc_total_age());
-                                                             
-                                break;
-                            case 3:
-                                Console.Clear();
-                                print_buss();
-                                Console.WriteLine();
-                                
-                                break;
-                            case 4:
-                                Console.Clear();
-                                Console.WriteLine("Den genomsnittliga åldern i bussen är: " + calc_average_age() + " år.");
-                                Console.Clear();
-                                break;
-
-                            case 5:
-                                Console.Clear();
-                                max_age();                                
-                                break;
-                            case 6:
-                                programIsActive = false;
-                                break;
-
-
-
-                        }
-                    }
-                    catch (Exception)
-                    {
-
-                        tryagain = true;
-                        Console.Clear();
-                        Console.WriteLine("Det du skrev in är inte en giltlig inmatning, prova igen.");
-                    }
-
-                    tryagain = false;
+                    selection = int.Parse(Console.ReadKey().KeyChar.ToString());
                 }
-                
-                
-                
-                
+                catch (Exception)
+                {
+
+                    tryagain = true;
+                    Console.Clear();
+                    Console.WriteLine("Det du skrev in är inte en giltlig inmatning, prova igen.");
+                }
+
+                switch (selection)
+                {
+                    case 1:
+                        Console.Clear();
+                        add_passenger();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine("Den totala åldern av alla passagerare är: " + calc_total_age());
+
+                        break;
+                    case 3:
+                        Console.Clear();
+                        print_buss();
+                        Console.WriteLine();
+
+                        break;
+                    case 4:
+                        Console.Clear();
+                        Console.WriteLine("Den genomsnittliga åldern i bussen är: " + calc_average_age() + " år.");
+                        Console.Clear();
+                        break;
+
+                    case 5:
+                        Console.Clear();
+                        max_age();
+                        break;
+                    case 6:
+                        programIsActive = false;
+                        break;
+
+
+
+                }
+
+                tryagain = false;
+
+
+
+
+
             }
             while (programIsActive);
 
-            
+
         }
 
-        
+
 
         //Metoder för betyget E
-        
+
         public void add_passenger()
         {
-            
 
+            bool loop = false;
             bool ParseSucessfull = true; //Check if the parse is sucessfull
-            int _age = 0;
-            if(Passengers[Passengers.Length - 1] == null) //För att kolla så att inte bussen är full
+
+            if (Passengers[Passengers.Length - 1] == null) //För att kolla så att inte bussen är full
             {
-                Console.WriteLine("  1. Skapa en passagerare med slumpmässigt namn och ålder.");
-                Console.WriteLine("  2. Skapa din egna passagerare.");
-                Console.WriteLine();
-
-                switch (int.Parse(Console.ReadLine()))
+                do
                 {
-                    case 1:
-                        Passengers[Passenger.amountOfP] = new Passenger();
-                        break;
-                    case 2:
-                        do
+                    Console.WriteLine("  1. Skapa en passagerare med slumpmässigt namn och ålder.");
+                    Console.WriteLine("  2. Skapa din egna passagerare.");
+                    Console.WriteLine();
+
+                    int selection = 0;
+
+
+
+                    do
+                    {
+                        try
                         {
-                            Console.WriteLine();
-                            if (ParseSucessfull)
+                            if (!ParseSucessfull)
                             {
-                                Console.Write("Skriv in åldern på passageraren: ");
+                                Console.Clear();
+                                System.Console.WriteLine("Tryck på 1 eller 2.");
                             }
-                            else if (!ParseSucessfull)
-                            {
-                                Console.WriteLine();
-                                Console.WriteLine("Skriv endast bara in siffror.");
-                            }
-                            ParseSucessfull = int.TryParse(Console.ReadLine(), out _age);
 
+                            selection = int.Parse(Console.ReadKey().KeyChar.ToString());
+                            ParseSucessfull = true;
                         }
-                        while (!ParseSucessfull);
-
-                        
-                        Console.Write("Skriv in ett namn på passageraren: ");
-                        string _name = Console.ReadLine();
-
-
+                        catch (Exception)
+                        {
+                            ParseSucessfull = false;
+                        }
+                    } while (!ParseSucessfull);
 
 
-                        Passengers[Passenger.amountOfP] = new Passenger(_age, _name);
-                        break;
+                switch (selection)
+                    {
 
-                    default:
-                        break;
+
+                        case 1:
+                            Passengers[Passenger.amountOfP] = new Passenger();
+                            break;
+                        case 2:
+
+                            Console.Clear();
+                            System.Console.Write("Skriv ett namn till din passagerare: ");
+                            string name = Console.ReadLine();
+                            System.Console.Write("Skriv in en ålder till din passagerare: ");
+                            int age = 0;
+
+                            try
+                            {
+                                age = int.Parse(Console.ReadKey().KeyChar.ToString());
+                                if (age < 0)
+                                {
+                                    ParseSucessfull = false;
+                                }
+                                else
+                                {
+                                    ParseSucessfull = true;
+                                }
+
+                            }
+                            catch (Exception)
+                            {
+                                ParseSucessfull = false;
+                            }
+
+
+                            try
+                            {
+                                age = int.Parse(Console.ReadLine());
+                                ParseSucessfull = true;
+                            }
+                            catch (Exception)
+                            {
+                                ParseSucessfull = false;
+                            }
+                            break;
+
+                        case 3:
+                            return;
+                        default:
+                            Console.Clear();
+                            System.Console.WriteLine("Det det du skrev in var inte giltligt försök igen.");
+                            loop = true;
+                            System.Console.WriteLine();
+                            break;
+                    }
                 }
+                while (loop == true);
 
-                Console.Clear();
-                Console.WriteLine(Passengers[Passenger.amountOfP - 1].name_ + " som är " + Passengers[Passenger.amountOfP - 1].age_ + " år, klev på bussen.");
-                
+
+
+
+
             }
             else
             {
                 Console.WriteLine("Bussen är tyvärr full nu, be en passagerare att gå av innan en ny stiger på.");
             }
-            
 
-            
-            
-            
+
+
+
+
 
             //Lägg till passagerare. Här skriver man då in ålder men eventuell annan information.
             //Om bussen är full kan inte någon passagerare stiga på
         }
-        
-        
-        
+
+
+
 
         public void print_buss()
         {
@@ -181,17 +227,17 @@ namespace Bussen
 
             for (int i = 0; i < Passengers.Length; i++)
             {
-                if(Passengers[i] != null)
+                if (Passengers[i] != null)
                 {
-                    Console.WriteLine("Namn: " + Passengers[i].name_ );
+                    Console.WriteLine("Namn: " + Passengers[i].name_);
                     Console.WriteLine("Ålder: " + Passengers[i].age_);
                     Console.WriteLine();
                 }
-                
-                
+
+
             }
             Console.WriteLine("Det finns " + (Passengers.Length - Passenger.amountOfP) + " platser kvar.");
-            
+
         }
 
         public int calc_total_age()
@@ -200,7 +246,7 @@ namespace Bussen
 
             for (int i = 0; i < Passengers.Length; i++)
             {
-                if(Passengers[i] != null)
+                if (Passengers[i] != null)
                 {
                     ageSum += Passengers[i].age_;
                 }
@@ -222,9 +268,9 @@ namespace Bussen
                 }
             }
 
-            return Math.Round(totalAge / divisor,2);
+            return Math.Round(totalAge / divisor, 2);
 
-            
+
         }
 
         public void max_age()
@@ -233,15 +279,15 @@ namespace Bussen
 
             for (int i = 0; i < Passengers.Length; i++)
             {
-                if(Passengers[i] != null)
+                if (Passengers[i] != null)
                 {
                     if (Passengers[oldestPassengerI].age_ < Passengers[i].age_)
                     {
                         oldestPassengerI = i;
                     }
                 }
-                
-                
+
+
             }
 
             Passenger oldestP = Passengers[oldestPassengerI];
@@ -251,7 +297,6 @@ namespace Bussen
 
         public void sort_bus()
         {
-
             Passenger temp;
             for (int j = 0; j <= Passengers.Length - 2; j++)
             {
@@ -265,11 +310,6 @@ namespace Bussen
                     }
                 }
             }
-
-
-
-
-
         }
     }
 }

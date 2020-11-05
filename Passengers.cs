@@ -7,6 +7,7 @@ namespace Bussen
     {
         public int age_;
         public string name_;
+        public string sex_;
 
         public static int amountOfP = 0;
 
@@ -20,15 +21,19 @@ namespace Bussen
 
         public Passenger()
         {
-            string[] names = File.ReadAllLines(new Program().GetLibPath());
+            string[] nameAndSexList = File.ReadAllLines(new Program().GetLibPath()); //Samlar in alla namn och kön som finns i en CSV fil i "Library"
 
-            
-            
+            int nameIndex = new Random().Next(0, (nameAndSexList.Length - 1)); // Skapar en slumpmässig index för att bestämma namn och kön
+
+
+
 
             age_ = new Random().Next(18, 80);
-            name_ = names[new Random().Next(0, 999)];
+            name_ = nameAndSexList[nameIndex].Split(",")[0];//Namn är bakom komma tecken alltså delar vi vid komma tecknet och tar index 0 i vektorn som metodern returnerar.
+            sex_ = nameAndSexList[nameIndex].Split(",")[1];//Här väljer vi könet som är framför kommatecknet och därför väljer vi index 1 i vektorn som metoden returnerar.
+
             amountOfP++;
-            
+
         }
     }
 

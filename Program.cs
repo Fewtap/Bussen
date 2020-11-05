@@ -6,7 +6,7 @@ namespace Bussen
 {
 
 
-    
+
 
 
     class Program
@@ -19,30 +19,33 @@ namespace Bussen
 
             buss.Run();
 
-            
-            
+
+
 
         }
-        
 
-        
-        
+
+
+
         public string GetLibPath()
         {
             string libPath = "";
 
-            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX)){
-               
-                libPath = Directory.GetCurrentDirectory() + @"/Library/SvenskaNamn.txt";
-                
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
+            {
+
+                libPath = Directory.GetCurrentDirectory() + @"/Library/SvenskaNamnOchKön.csv";
+
             }
-            else if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux)){
-                libPath = Directory.GetCurrentDirectory() + @"/Library/SvenskaNamn.txt";
+            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+            {
+                libPath = Directory.GetCurrentDirectory() + @"/Library/SvenskaNamnOchKön.csv";
             }
-            else if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)){
+            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+            {
 
 
-                libPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\")) + @"Library\SvenskaNamn.txt";
+                libPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\")) + @"Library\SvenskaNamnOchKön.csv";
 
             }
 
