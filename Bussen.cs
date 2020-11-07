@@ -26,32 +26,41 @@ namespace Bussen
 
             do
             {
-                Console.WriteLine("------------------------------");
-                Console.WriteLine();
-
-                Console.WriteLine("  1. Add a passenger.");
-                Console.WriteLine("  2. Show the total age of all the passengers in the bus.");
-                Console.WriteLine("  3. Show passenger information.");
-                Console.WriteLine("  4. Calculate the average age of all the passengers in the bus.");
-                Console.WriteLine("  5. Find the oldest person.");
-                Console.WriteLine("  6. Exit the program.");
-                Console.WriteLine();
-                Console.WriteLine("------------------------------");
-
                 bool tryagain = true;
-
                 int selection = 0;
-                try
+                do
                 {
-                    selection = int.Parse(Console.ReadKey().KeyChar.ToString());
-                }
-                catch (Exception)
-                {
+                    Console.WriteLine("------------------------------");
+                    Console.WriteLine();
 
-                    tryagain = true;
-                    Console.Clear();
-                    Console.WriteLine("Det du skrev in är inte en giltlig inmatning, prova igen.");
-                }
+                    Console.WriteLine("  1. Add a passenger.");
+                    Console.WriteLine("  2. Show the total age of all the passengers in the bus.");
+                    Console.WriteLine("  3. Show passenger information.");
+                    Console.WriteLine("  4. Calculate the average age of all the passengers in the bus.");
+                    Console.WriteLine("  5. Find the oldest person.");
+                    Console.WriteLine("  6. Exit the program.");
+                    Console.WriteLine();
+                    Console.WriteLine("------------------------------");
+
+
+
+
+                    try
+                    {
+                        selection = int.Parse(Console.ReadKey().KeyChar.ToString());
+                        tryagain = false;
+                    }
+                    catch (Exception)
+                    {
+
+                        tryagain = true;
+                        Console.Clear();
+                        Console.WriteLine("Det du skrev in är inte en giltlig inmatning, prova igen.");
+                        System.Console.WriteLine();
+                    }
+                } while (tryagain);
+
+
 
                 switch (selection)
                 {
@@ -73,7 +82,7 @@ namespace Bussen
                     case 4:
                         Console.Clear();
                         Console.WriteLine("Den genomsnittliga åldern i bussen är: " + calc_average_age() + " år.");
-                        Console.Clear();
+
                         break;
 
                     case 5:
@@ -142,7 +151,7 @@ namespace Bussen
                     } while (!ParseSucessfull);
 
 
-                switch (selection)
+                    switch (selection)
                     {
 
 
@@ -159,7 +168,7 @@ namespace Bussen
 
                             try
                             {
-                                age = int.Parse(Console.ReadKey().KeyChar.ToString());
+                                age = int.Parse(Console.ReadLine());
                                 if (age < 0)
                                 {
                                     ParseSucessfull = false;
@@ -175,16 +184,35 @@ namespace Bussen
                                 ParseSucessfull = false;
                             }
 
+                            Console.Clear();
+                            System.Console.WriteLine("Välj könet av din passagerare:\n1. Man\n2. Kvinna");
 
+                            string sex = "";
                             try
                             {
-                                age = int.Parse(Console.ReadLine());
-                                ParseSucessfull = true;
+                                selection = int.Parse(Console.ReadKey().KeyChar.ToString());
                             }
                             catch (Exception)
                             {
-                                ParseSucessfull = false;
+
                             }
+
+
+                            switch (selection)
+                            {
+                                case 1:
+                                    sex = "Man";
+                                    break;
+                                case 2:
+                                    sex = "Kvinna";
+                                    break;
+                                default:
+                                    System.Console.WriteLine("Det är inte en giltligt val.");
+                                    break;
+                            }
+
+
+                            Passengers[Passenger.amountOfP] = new Passenger(age, name, sex);
                             break;
 
                         case 3:
@@ -232,6 +260,7 @@ namespace Bussen
                 {
                     Console.WriteLine("Namn: " + Passengers[i].name_);
                     Console.WriteLine("Ålder: " + Passengers[i].age_);
+                    System.Console.WriteLine("Kön: " + Passengers[i].sex_);
                     Console.WriteLine();
                 }
 
@@ -311,6 +340,55 @@ namespace Bussen
                     }
                 }
             }
+        }
+
+        public void find_age()
+        {
+            int selection = 0;
+            bool loop = false;
+
+            System.Console.WriteLine("1. Hitta en specifik ålder.\n2. Hitta en ålder inom ett specifikt omfång.");
+            System.Console.WriteLine();
+            do
+            {
+                try
+                {
+                    selection = int.Parse(Console.ReadKey().KeyChar.ToString());
+                    loop = false;
+                }
+                catch (Exception)
+                {
+                    loop = true;
+                }
+
+            } while (loop);
+
+            switch (selection)
+            {
+                case 1:
+
+                    System.Console.WriteLine("Välj en ålder att söka på.");
+
+                    int ageSelection;
+                    do
+                    {
+                        try
+                        {
+                            ageSelection = int.Parse(Console.ReadLine());
+                            loop = false;
+                        }
+                        catch (Exception)
+                        {
+                            System.Console.WriteLine("Prova att bara skriva in siffror.");
+                            loop = true;
+                        }
+                    } while (loop);
+                    break;
+            }
+
+
+
+
         }
     }
 }

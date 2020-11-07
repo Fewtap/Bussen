@@ -11,10 +11,11 @@ namespace Bussen
 
         public static int amountOfP = 0;
 
-        public Passenger(int age, string name)
+        public Passenger(int age, string name, string sex)
         {
             age_ = age;
             name_ = name;
+            sex_ = sex;
             amountOfP++;
 
         }
