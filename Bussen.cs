@@ -8,6 +8,7 @@
  * För högre betyg krävs mer självständigt arbete
  */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 //Nedan är namnet på "namespace" - alltså projektet. 
@@ -18,6 +19,7 @@ namespace Bussen
     {
         public Passenger[] Passengers = new Passenger[25];
         bool programIsActive = true;
+        string ErrorMessageParse = "Prova att bara skriva in siffror.";
 
 
         public void Run()
@@ -38,7 +40,8 @@ namespace Bussen
                     Console.WriteLine("  3. Show passenger information.");
                     Console.WriteLine("  4. Calculate the average age of all the passengers in the bus.");
                     Console.WriteLine("  5. Find the oldest person.");
-                    Console.WriteLine("  6. Exit the program.");
+                    Console.WriteLine("  6. Hitta en passagerare via åldern.");
+                    Console.WriteLine("  7. Exit the program.");
                     Console.WriteLine();
                     Console.WriteLine("------------------------------");
 
@@ -90,6 +93,9 @@ namespace Bussen
                         max_age();
                         break;
                     case 6:
+                        find_age();
+                        break;
+                    case 7:
                         programIsActive = false;
                         break;
 
@@ -98,6 +104,7 @@ namespace Bussen
                 }
 
                 tryagain = false;
+
 
 
 
@@ -344,9 +351,11 @@ namespace Bussen
 
         public void find_age()
         {
+            Console.Clear();
             int selection = 0;
             bool loop = false;
-
+            bool PassengerIsFound = false;
+            List<Passenger> PassengersFound = new List<Passenger>();
             System.Console.WriteLine("1. Hitta en specifik ålder.\n2. Hitta en ålder inom ett specifikt omfång.");
             System.Console.WriteLine();
             do
@@ -363,13 +372,15 @@ namespace Bussen
 
             } while (loop);
 
+            Console.Clear();
+
             switch (selection)
             {
                 case 1:
 
-                    System.Console.WriteLine("Välj en ålder att söka på.");
+                    System.Console.Write("Välj en ålder att söka på: ");
 
-                    int ageSelection;
+                    int ageSelection = 0;
                     do
                     {
                         try
@@ -379,16 +390,126 @@ namespace Bussen
                         }
                         catch (Exception)
                         {
-                            System.Console.WriteLine("Prova att bara skriva in siffror.");
+                            System.Console.WriteLine(ErrorMessageParse);
                             loop = true;
                         }
+
+
                     } while (loop);
+
+                    Console.Clear();
+                    System.Console.WriteLine("Resultat:\n");
+
+
+
+                    for (int i = 0; i < Passengers.Length; i++)
+                    {
+                        if (Passengers[i] != null)
+                        {
+                            if (ageSelection == Passengers[i].age_)
+                            {
+
+                                PassengersFound.Add(Passengers[i]);
+                                PassengerIsFound = true;
+                            }
+                        }
+
+                    }
+
+
+
+                    if (PassengerIsFound)
+                    {
+
+                        foreach (var passenger in PassengersFound)
+                        {
+                            System.Console.WriteLine("Namn: " + passenger.name_ + "\nÅlder: " + passenger.age_ + "\nKön: " + passenger.sex_ + "\n");
+                        }
+
+
+                    }
+                    else if (!PassengerIsFound)
+                    {
+                        System.Console.WriteLine("Det fanns ingen som hade den åldern.");
+                    }
+
                     break;
+
+                case 2:
+                    int minAge = 0;
+                    int maxAge = 0;
+
+                    do
+                    {
+                        System.Console.Write("Välj minimum åldern: ");
+                        try
+                        {
+                            minAge = int.Parse(Console.ReadLine());
+                            loop = false;
+                        }
+                        catch (Exception)
+                        {
+                            System.Console.WriteLine(ErrorMessageParse);
+                            loop = true;
+                        }
+
+                        System.Console.Write("Välj max åldern: ");
+                        try
+                        {
+                            maxAge = int.Parse(Console.ReadLine());
+                            loop = false;
+                        }
+                        catch (Exception)
+                        {
+                            System.Console.WriteLine(ErrorMessageParse);
+                            loop = true;
+                        }
+                    }while(loop);
+
+
+
+
+                    for (int i = 0; i < Passengers.Length; i++)
+                    {
+                        if (Passengers[i] != null)
+                        {
+                            if (Passengers[i].age_ > minAge && Passengers[i].age_ < maxAge)
+                            
+                            {
+                                PassengersFound.Add(Passengers[i]);
+                                PassengerIsFound = true;
+
+                            }
+                        }
+                    }
+                    if (PassengerIsFound)
+                    {
+                        foreach (var passenger in PassengersFound)
+                        {
+                            System.Console.WriteLine("Namn: " + passenger.name_ + "\nÅlder: " + passenger.age_ + "\nKön: " + passenger.sex_ + "\n");
+                        }
+                    }
+                    else if (!PassengerIsFound)
+                    {
+                        System.Console.WriteLine("Det fanns ingen som hade den åldern.");
+                    }
+                    break;
+
+                default:
+                    System.Console.WriteLine("Det är inte ett giltligt alternativ.");
+                    break;
+
+
+
+
+
             }
 
 
 
 
         }
+
+
     }
 }
