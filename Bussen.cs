@@ -340,23 +340,6 @@ namespace Bussen
             Console.WriteLine("The oldest passenger is " + oldestP.name_ + " who is " + oldestP.age_ + " years old.");
         }
 
-        public void sort_bus()
-        {
-            Passenger temp;
-            for (int j = 0; j <= Passengers.Length - 2; j++)
-            {
-                for (int i = 0; i <= Passengers.Length - 2; i++)
-                {
-                    if (Passengers[i].age_ > Passengers[i + 1].age_)
-                    {
-                        temp = Passengers[i + 1];
-                        Passengers[i + 1] = Passengers[i];
-                        Passengers[i] = temp;
-                    }
-                }
-            }
-        }
-
         public void find_age()
         {
             Console.Clear();
