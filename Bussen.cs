@@ -513,5 +513,106 @@ namespace Bussen
                 }
             }
         }
+
+        public void getting_off()
+        {
+            List<Passenger> passengerHits = new List<Passenger>();
+            bool PassengerIsFound = false;
+            bool loop = false;
+
+            System.Console.Write("Skriv namnet på passageraren som du vill ska gå av: ");
+            string name = Console.ReadLine();
+            for (int i = 0; i < Passengers.Length; i++)//Söker igenom hela bussen
+            {
+                if (Passengers[i] != null)
+                {
+                    for (int j = 0; j < 2; j++)//För att kolla både med stor och liten första bokstav.
+                    {
+                        switch (j)
+                        {
+                            case 0://Stor första bokstav
+                                string nameWithUpper = name.Substring(0, 1).ToUpper();
+                                if (nameWithUpper == Passengers[i].name_)
+                                {
+                                    passengerHits.Add(Passengers[i]);
+                                    PassengerIsFound = true;
+                                }
+                                break;
+                            case 1:
+                                string nameWithLower = name.Substring(0, 1).ToLower();
+                                if (nameWithLower == Passengers[i].name_)
+                                {
+                                    passengerHits.Add(Passengers[i]);
+                                    PassengerIsFound = true;
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+
+            if (PassengerIsFound == true)
+            {
+                int passengerIndex = 0;
+
+                if (passengerHits.Count > 1)
+                {
+                    System.Console.WriteLine("Det fanns flera träffar: \n");
+
+                    Passenger p;
+
+                    for (int i = 0; i < passengerHits.Count; i++)
+                    {
+                        p = passengerHits[i];
+                        System.Console.WriteLine(Convert.ToString((i + 1)) + ". Namn: " + p.name_ + "\nÅlder: " + p.age_ + "\nKön: " + p.sex_ + "\n");
+                    }
+
+                    System.Console.Write("Välj respektive nummer för att passageraren skall kliva av: ");
+
+                    int selection = 0;
+
+                    do
+                    {
+                        try
+                        {
+                            selection = int.Parse(Console.ReadKey().KeyChar.ToString());
+                        }
+                        catch (Exception)
+                        {
+                            loop = true;
+                            System.Console.WriteLine(ErrorMessageParse + "\n");
+                        }
+                    } while (loop);
+
+                    selection--;//Detta är för att numret som användaren skriver in skall motsvara rätt vektor index.
+
+                    
+
+                    for (int i = 0; i < Passengers.Length; i++)//Hitta passageraren i vektorn
+                    {
+                        if (Passengers[i] != null)
+                        {
+                            for (int j = 0; j < passengerHits.Count; j++)
+                            {
+                                if (passengerHits[j] == Passengers[i])
+                                {
+                                    passengerIndex = i;
+                                }
+                            }
+                        }
+                    }
+
+                    for (int i = passengerIndex; i < Passengers.Length - 1; i++)
+                    {
+                        Passengers[i] = Passengers[i + 1];
+                    }
+
+
+                }
+
+            }
+
+        }
     }
+
 }
