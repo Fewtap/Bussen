@@ -41,7 +41,8 @@ namespace Bussen
                     Console.WriteLine("  4. Calculate the average age of all the passengers in the bus.");
                     Console.WriteLine("  5. Find the oldest person.");
                     Console.WriteLine("  6. Hitta en passagerare via åldern.");
-                    Console.WriteLine("  7. Exit the program.");
+                    Console.WriteLine("  7. Sortera bussen efter ålder.");
+                    Console.WriteLine("  8. Exit the program.");
                     Console.WriteLine();
                     Console.WriteLine("------------------------------");
 
@@ -93,11 +94,18 @@ namespace Bussen
                         max_age();
                         break;
                     case 6:
+                        Console.Clear();
                         find_age();
                         break;
                     case 7:
+                        Console.Clear();
+                        sort_buss();
+                        break;
+                    case 8:
+                        Console.Clear();
                         programIsActive = false;
                         break;
+
 
 
 
@@ -464,7 +472,7 @@ namespace Bussen
                             System.Console.WriteLine(ErrorMessageParse);
                             loop = true;
                         }
-                    }while(loop);
+                    } while (loop);
 
 
 
@@ -474,7 +482,7 @@ namespace Bussen
                         if (Passengers[i] != null)
                         {
                             if (Passengers[i].age_ > minAge && Passengers[i].age_ < maxAge)
-                            
+
                             {
                                 PassengersFound.Add(Passengers[i]);
                                 PassengerIsFound = true;
@@ -498,18 +506,29 @@ namespace Bussen
                 default:
                     System.Console.WriteLine("Det är inte ett giltligt alternativ.");
                     break;
-
-
-
-
-
             }
-
-
-
-
         }
 
+        public void sort_buss()
+        {
+            Passenger temp;
 
+            for (int j = 0; j <= Passengers.Length - 2; j++)
+            {
+                for (int i = 0; i <= Passengers.Length - 2; i++)
+                {
+                    if (Passengers[i + 1] != null)
+                    {
+                        if (Passengers[i].age_ > Passengers[i + 1].age_)
+                        {
+                            temp = Passengers[i + 1];
+                            Passengers[i + 1] = Passengers[i];
+                            Passengers[i] = temp;
+                        }
+                    }
+
+                }
+            }
+        }
     }
 }
