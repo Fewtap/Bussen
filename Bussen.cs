@@ -26,6 +26,8 @@ namespace Bussen
         {
             Console.WriteLine("Welcome to the awesome Buss-simulator");
 
+
+
             do
             {
                 bool tryagain = true;
@@ -42,7 +44,8 @@ namespace Bussen
                     Console.WriteLine("  5. Find the oldest person.");
                     Console.WriteLine("  6. Hitta en passagerare via åldern.");
                     Console.WriteLine("  7. Sortera bussen efter ålder.");
-                    Console.WriteLine("  8. Exit the program.");
+                    Console.WriteLine("  8. Be en passagerare att gå av.");
+                    Console.WriteLine("  9. Exit the program.");
                     Console.WriteLine();
                     Console.WriteLine("------------------------------");
 
@@ -103,6 +106,10 @@ namespace Bussen
                         break;
                     case 8:
                         Console.Clear();
+                        getting_off();
+                        break;
+                    case 9:
+                        Console.Clear();
                         programIsActive = false;
                         break;
 
@@ -132,7 +139,7 @@ namespace Bussen
         {
 
             bool loop = false;
-            bool ParseSucessfull = true; //Check if the parse is sucessfull
+
 
             if (Passengers[Passengers.Length - 1] == null) //För att kolla så att inte bussen är full
             {
@@ -150,20 +157,23 @@ namespace Bussen
                     {
                         try
                         {
-                            if (!ParseSucessfull)
+                            if (loop == true)
                             {
                                 Console.Clear();
-                                System.Console.WriteLine("Tryck på 1 eller 2.");
+                                System.Console.WriteLine("Du kan endast trycka på 1 eller 2.");
+                                Console.WriteLine("  1. Skapa en passagerare med slumpmässigt namn och ålder.");
+                                Console.WriteLine("  2. Skapa din egna passagerare.");
+                                Console.WriteLine();
                             }
 
                             selection = int.Parse(Console.ReadKey().KeyChar.ToString());
-                            ParseSucessfull = true;
+                            loop = false;
                         }
                         catch (Exception)
                         {
-                            ParseSucessfull = false;
+                            loop = true;
                         }
-                    } while (!ParseSucessfull);
+                    } while (loop);
 
 
                     switch (selection)
@@ -181,36 +191,52 @@ namespace Bussen
                             System.Console.Write("Skriv in en ålder till din passagerare: ");
                             int age = 0;
 
-                            try
+                            do
                             {
-                                age = int.Parse(Console.ReadLine());
-                                if (age < 0)
+                                try
                                 {
-                                    ParseSucessfull = false;
-                                }
-                                else
-                                {
-                                    ParseSucessfull = true;
-                                }
+                                    age = int.Parse(Console.ReadLine());
+                                    if (age < 0)
+                                    {
+                                        loop = true;
+                                    }
+                                    else
+                                    {
+                                        loop = false;
+                                    }
 
-                            }
-                            catch (Exception)
-                            {
-                                ParseSucessfull = false;
-                            }
+                                }
+                                catch (Exception)
+                                {
+                                    loop = true;
+                                    System.Console.WriteLine(ErrorMessageParse);
+                                }
+                            }while(loop);
+
+
+
+
 
                             Console.Clear();
                             System.Console.WriteLine("Välj könet av din passagerare:\n1. Man\n2. Kvinna");
 
                             string sex = "";
-                            try
-                            {
-                                selection = int.Parse(Console.ReadKey().KeyChar.ToString());
-                            }
-                            catch (Exception)
-                            {
 
-                            }
+                            do
+                            {
+                                try
+                                {
+                                    selection = int.Parse(Console.ReadKey().KeyChar.ToString());
+                                    loop = false;
+                                }
+                                catch (Exception)
+                                {
+                                    loop = true;
+                                    System.Console.WriteLine(ErrorMessageParse);
+                                }
+                            } while (loop);
+
+
 
 
                             switch (selection)
@@ -230,8 +256,7 @@ namespace Bussen
                             Passengers[Passenger.amountOfP] = new Passenger(age, name, sex);
                             break;
 
-                        case 3:
-                            return;
+
                         default:
                             Console.Clear();
                             System.Console.WriteLine("Det det du skrev in var inte giltligt försök igen.");
@@ -586,7 +611,7 @@ namespace Bussen
 
                     selection--;//Detta är för att numret som användaren skriver in skall motsvara rätt vektor index.
 
-                    
+
 
                     for (int i = 0; i < Passengers.Length; i++)//Hitta passageraren i vektorn
                     {
@@ -604,8 +629,43 @@ namespace Bussen
 
                     for (int i = passengerIndex; i < Passengers.Length - 1; i++)
                     {
-                        Passengers[i] = Passengers[i + 1];
+                        if (i != (Passengers.Length - 1))
+                        {
+                            Passengers[i] = Passengers[i + 1];
+                        }
+
                     }
+
+
+                }
+                else
+                {
+                    for (int i = 0; i < Passengers.Length; i++)//Hitta passageraren i vektorn
+                    {
+                        if (Passengers[i] != null)
+                        {
+                            for (int j = 0; j < passengerHits.Count; j++)
+                            {
+                                if (passengerHits[j] == Passengers[i])
+                                {
+                                    passengerIndex = i;
+                                }
+                            }
+                        }
+                    }
+
+                    System.Console.WriteLine(Passengers[passengerIndex].name_ + " gick av bussen.");
+
+                    for (int i = passengerIndex; i < Passengers.Length - 1; i++)
+                    {
+                        if (i != (Passengers.Length - 1))
+                        {
+                            Passengers[i] = Passengers[i + 1];
+                        }
+
+                    }
+
+                    Passenger.amountOfP--;
 
 
                 }
